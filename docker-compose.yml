@@ -15,7 +15,7 @@ services:
     build: ./picasso
     restart: always
     command: >
-      sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0:8000"
+      sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --no-input && python manage.py runserver 0:8000"
     env_file: ./picasso/.env
     volumes:
       - ./picasso:/app
