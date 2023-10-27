@@ -40,7 +40,7 @@ class PostViewTests(TestCase):
         file_dir = os.path.join(my_dir, self.file_name)
         with open(file_dir, "rb") as file:
             data = {"file": file}
-            response = self.guest_client.post("http://127.0.0.1/api/upload/", data=data)
+            response = self.guest_client.post("http://proxy/api/upload/", data=data)
             self.assertEqual(response.status_code, HTTPStatus.CREATED)
 
     def test_get_files(self):
@@ -51,20 +51,20 @@ class PostViewTests(TestCase):
         with open(file_dir, "rb") as file:
             data = {"file": file}
             response1 = self.guest_client.post(
-                "http://127.0.0.1/api/upload/", data=data
+                "http://proxy/api/upload/", data=data
             )
             self.assertEqual(response1.status_code, HTTPStatus.CREATED)
 
         with open(file_dir, "rb") as file:
             data = {"file": file}
             response2 = self.guest_client.post(
-                "http://127.0.0.1/api/upload/", data=data
+                "http://proxy/api/upload/", data=data
             )
 
             self.assertEqual(response2.status_code, HTTPStatus.CREATED)
 
         response = self.guest_client.get(
-            "http://127.0.0.1/api/files/",
+            "http://proxy/api/files/",
         )
         responses = response.json()
         example_fields = [
