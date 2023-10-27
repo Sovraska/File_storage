@@ -1,0 +1,44 @@
+version: "3.3"
+
+services:
+  db:
+    container_name: db
+    image: postgres:14
+    env_file: ./picasso/.env
+    volumes:
+      - database:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  picasso:
+    container_name: picasso
+    build: ./picasso
+    restart: always
+    command: >
+      sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0:8000"
+    env_file: ./picasso/.env
+    volumes:
+      - ./picasso:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+
+  worker:
+    container_name: celery
+    build: ./picasso
+    restart: always
+    volumes:
+      - ./picasso:/app
+    command: ["celery", "-A", "picasso", "worker", "-l", "info"]
+    env_file: ./picasso/.env
+    depends_on:
+      - redis
+
+volumes:
+  database:
