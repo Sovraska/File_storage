@@ -6,12 +6,9 @@
 
 - Проект завернут в Docker-контейнерах;
     ```
-    Redis: 
-    db:  
-    picasso:
-    celery:
-    proxy:
+    Redis, db, picasso, celery, proxy:
     ```
+- Посмотреть можно [тут](http://158.160.83.68/api/upload/)
     
   
 ## Стек технологий
@@ -36,6 +33,8 @@
 5. Можете создать учётную запись Администратора `docker-compose exec -it picasso python manage.py createsuperuser`
 6. После чего по адресу <http://51.250.100.232/api/upload/> можно будет загрузить файлы.
 7. А по адресу <http://51.250.100.232/api/files/> получить все файлы находящиеся на проекте
+
+так же есть unittests
 
 ## Автор
 

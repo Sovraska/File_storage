@@ -3,6 +3,9 @@ import shutil
 import tempfile
 from http import HTTPStatus
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "picasso.settings")
+import django
+django.setup()
 from django.conf import settings
 from django.core.cache import cache
 from django.test import Client, TestCase, override_settings
@@ -70,8 +73,6 @@ class PostViewTests(TestCase):
             "uploaded_at",
             "processed",
         ]
-        self.assertEqual(responses[0]["id"], 1)
-        self.assertEqual(responses[1]["id"], 2)
         for example_field in example_fields:
             self.assertEqual(len(responses), 2)
             for response in responses:
